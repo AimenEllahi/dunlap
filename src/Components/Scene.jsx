@@ -1,14 +1,14 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Environment, Html } from "@react-three/drei";
+import { Environment } from "@react-three/drei";
 import { Suspense } from "react";
 import Loader from "./Loader";
-import { Plane } from "@react-three/drei";
+
 import { Model as Marble } from "./3d/Marble";
-import { useControls } from "leva";
-import { TextureLoader } from "three";
 import { Sparkles } from "@react-three/drei";
 import DialogueBox from "./DialogueBox";
+import { gsap } from "gsap";
+import SplitType from "split-type";
 
 export default function Scene() {
   const formRef = useRef();
@@ -35,14 +35,34 @@ export default function Scene() {
     }
   };
 
+  useEffect(() => {
+    const ourText = new SplitType(".anim-text", { types: "chars" });
+    const chars = ourText.chars;
+
+    gsap.fromTo(
+      chars,
+      {
+        y: 100,
+        opacity: 0,
+      },
+      {
+        y: 0,
+        opacity: 1,
+        stagger: 0.05,
+        duration: 2,
+        ease: "power4.out",
+      }
+    );
+  }, []);
+
   return (
-    <div className="relative h-screen w-screen">
-      <Canvas shadows className="z-2">
+    <div className='relative h-screen w-screen  '>
+      <Canvas shadows className='z-2'>
         <ambientLight intensity={3} color={"#3F2305"} />
 
         <Suspense fallback={<Loader />}>
           <Marble />
-          <Environment preset="studio" />
+          <Environment preset='studio' />
         </Suspense>
         <Sparkles
           count={100}
@@ -51,39 +71,24 @@ export default function Scene() {
           speed={0.6}
           color={"#B4B4B8"}
         />
-        <Plane
-          args={[100, 100]}
-          rotation={[-Math.PI / 2, 0, 0]}
-          position={[0, 0, -10]}
-        >
-          <meshBasicMaterial
-            attach="material"
-            map={new TextureLoader().load("/intro_bg.png.webp")}
-          />
-        </Plane>
-        <Html
-          position={[
-            window.innerWidth < 768 ? -1.5 : -7.2,
-            window.innerWidth < 768 ? -1 : 0,
-            0,
-          ]}
-        >
-          <div className="flex justify-center items-center">
-            <h1 className="md:text-[4.5rem] text-[2.5rem] font-thin text-black font-serif ">
-              SOUND EXPERIENCE
-            </h1>
-          </div>
-        </Html>
       </Canvas>
-      <div className="w-10 h-20 absolute top-10 left-10 ">
-        <img src="/icons/logo.png" alt="" className="f-full" />
+      <div className='flex justify-center flex-col absolute   bottom-[20%] left-5 items-start w-[30rem] '>
+        <h1 className='md:text-[4.5rem] tinos-bold text-[2.5rem] font-thin text-black leading-[5rem] anim-text'>
+          SOUND
+        </h1>
+        <h1 className='md:text-[4.5rem] tinos-bold text-[2.5rem] font-thin text-black leading-[5rem] anim-text'>
+          EXPERIENCE
+        </h1>
       </div>
-      <div className="w-20 h-20 absolute top-10 right-10">
+      <div className=' absolute top-10 left-10 '>
+        <img src='/icons/logo.png' alt='' className='w-14 object-contain' />
+      </div>
+      <div className='h-20 absolute top-10 right-10'>
         <a
-          href=""
-          className="text-black text-xl hover:text-black hover:tracking-wide transition-all duration-300 ease-in-out"
+          href=''
+          className='text-black text-xl uppercase hover:text-black hover:tracking-wide transition-all duration-300 ease-in-out'
         >
-          AboutUs
+          About Us
         </a>
       </div>
       {showDialogue && (
@@ -95,24 +100,24 @@ export default function Scene() {
       {playing ? (
         <div
           onClick={handleMusic}
-          className="w-10 h-10 absolute bottom-10 right-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out"
+          className='w-10 h-10 absolute bottom-10 right-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'
         >
           <img
-            src="/icons/audio.gif"
-            alt=""
-            className="w-full"
+            src='/icons/audio.gif'
+            alt=''
+            className='w-full'
             onClick={() => setIsMusicPlaying(false)}
           />
         </div>
       ) : (
         <div
           onClick={handleMusic}
-          className="w-10 h-10 absolute bottom-10 right-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out"
+          className='w-10 h-10 absolute bottom-10 right-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'
         >
           <img
-            src="/icons/audioOff.png"
-            alt=""
-            className="w-full"
+            src='/icons/audioOff.png'
+            alt=''
+            className='w-full'
             onClick={() => setIsMusicPlaying(true)}
           />
         </div>

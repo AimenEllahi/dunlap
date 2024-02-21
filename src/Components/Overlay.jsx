@@ -47,38 +47,24 @@ export default function Overlay() {
 
   return (
     <>
-      <div className="  absolute opacity-0 bottom-10 left-10 z-[20] music-controller flex items-center gap-x-2 flex-row-reverse volume">
-        {" "}
-        {playing && (
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={volume * 100}
-            onChange={(e) => {
-              setVolume(e.target.value / 100);
-              audio.volume = e.target.value / 100;
-            }}
-            className=" h-1.5 z-[20] !w-20  opacity-40 hover:opacity-95 transition-all duration-200 ease-in-out cursor-pointer"
-          ></input>
-        )}
+      <div className='  absolute opacity-0 bottom-10 left-10 z-[20] music-controller flex items-center gap-x-2 flex-row-reverse volume font-serif'>
         <div onClick={() => setPlaying((prev) => !prev)}>
           {playing ? (
             <div
               onClick={handleMusic}
-              className="w-10 h-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out"
+              className='w-10 h-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'
             >
-              <img src="/icons/audio.gif" alt="" className="w-full" />
+              <img src='/icons/audio.gif' alt='' className='w-full' />
             </div>
           ) : (
-            <div className="w-10 h-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out">
-              <img src="/icons/audioOff.png" alt="" className="w-full" />
+            <div className='w-10 h-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'>
+              <img src='/icons/audioOff.png' alt='' className='w-full' />
             </div>
           )}
         </div>
       </div>
 
-      <div className="absolute top-0 bottom-0 right-0 left-0  overlay-elements ">
+      <div className='absolute top-0 bottom-0 right-0 left-0  overlay-elements '>
         {/* Loader overlay */}
         <div
           className={`loader ${progress === 100 ? "loader-disappear" : ""}`}
@@ -86,21 +72,21 @@ export default function Overlay() {
 
         {/* Overlay elements */}
         {progress === 100 && (
-          <div className="flex background font-serif justify-around items-center flex-col h-full bg-gradient-to-t to-[#6B240C] from-white">
-            <h1 className="text-white flex text-[5rem] p-0 m-0 transform translate-y-[-70%] absolute tracking-wide logo">
+          <div className='flex background font-serif justify-around items-center flex-col h-full bg-gradient-to-t to-[#6B240C] from-white'>
+            <h1 className='text-white flex text-[5rem] p-0 m-0 transform translate-y-[-70%] absolute tracking-wide logo'>
               Sound Experience
             </h1>
-            <div className="mt-20">
+            <div className='mt-20'>
               <span>Do you want to play sound?</span>
-              <div className="flex gap-x-4">
+              <div className='flex gap-x-4'>
                 <button
                   onClick={handleYesClick}
-                  className="text-black bg-white px-4 py-2 rounded mr-2"
+                  className='text-black bg-white px-4 py-2 rounded mr-2'
                 >
                   Yea
                 </button>
                 <button
-                  className="text-white bg-black px-4 py-2 rounded"
+                  className='text-white bg-black px-4 py-2 rounded'
                   onClick={() => {
                     setPlaying(false);
                   }}
