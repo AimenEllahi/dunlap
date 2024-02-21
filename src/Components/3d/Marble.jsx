@@ -12,14 +12,14 @@ export function Model(props) {
     group.current.rotation.y = THREE.MathUtils.lerp(
       group.current.rotation.y,
       state.pointer.x,
-      0.04
+      0.02
     );
 
     // Smoothly rotate towards the target rotation
     group.current.rotation.x = THREE.MathUtils.lerp(
       group.current.rotation.x,
       -state.pointer.y,
-      0.04
+      0.02
     );
   });
 
