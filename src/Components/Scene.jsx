@@ -56,7 +56,7 @@ export default function Scene() {
   }, []);
 
   return (
-    <div className='relative h-screen w-screen  '>
+    <div className='relative max-h-screen max-w-screen h-screen w-screen overflow-hidden  '>
       <Canvas shadows className='z-2'>
         <ambientLight intensity={3} color={"#3F2305"} />
 
