@@ -32,7 +32,7 @@ export default function MusicOverlay() {
         />
       )}
       {playing ? (
-        <div className='w-10 h-10 absolute z-[4] bottom-10 right-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'>
+        <div className='w-10 h-10 fixed z-[4] bottom-10 right-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'>
           <img
             src='/icons/audio.gif'
             alt=''
@@ -41,7 +41,7 @@ export default function MusicOverlay() {
           />
         </div>
       ) : (
-        <div className='w-10 h-10 absolute z-[4] bottom-10 right-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'>
+        <div className='w-10 h-10 fixed z-[4] bottom-10 right-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'>
           <img
             src='/icons/audioOff.png'
             alt=''

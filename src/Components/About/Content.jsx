@@ -1,7 +1,30 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import SplitType from "split-type";
 import { gsap } from "gsap";
 export default function Content() {
+  const imageRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("fadeIn");
+          observer.unobserve(entry.target);
+        }
+      });
+    });
+
+    if (imageRef.current) {
+      observer.observe(imageRef.current);
+    }
+
+    return () => {
+      if (imageRef.current) {
+        observer.unobserve(imageRef.current);
+      }
+    };
+  }, []);
+
   useEffect(() => {
     const ourText = new SplitType(".about-header-title", { types: "chars" });
     const chars = ourText.chars;
@@ -9,24 +32,30 @@ export default function Content() {
     tl.fromTo(
       chars,
       {
-        y: 0,
-        opacity: 1,
+        y: 100,
+        opacity: 0,
       },
       {
-        y: -100,
-        delay: 1,
-        opacity: 0,
+        y: 0,
+
+        opacity: 1,
         stagger: 0.05,
         duration: 2,
         ease: "power4.out",
       }
-    )
-      .to(".about-header-desc-1", {
-        opacity: 1,
-      })
-      .to(".about-header-desc-2", {
-        opacity: 1,
-      });
+    ).to(chars, {
+      opacity: 0,
+      onStart: () => {
+        const tl2 = gsap.timeline();
+        tl2
+          .to(".about-header-desc-1", {
+            opacity: 1,
+          })
+          .to(".about-header-desc-2", {
+            opacity: 1,
+          });
+      },
+    });
   }, []);
   return (
     <div className='z-[10] mt-20 text-black arvo-regular'>
@@ -62,7 +91,8 @@ export default function Content() {
         </div>
         <img
           src='/images/about.webp'
-          className='w-3/4 md:object-contain md:h-auto h-[60vh] object-cover'
+          ref={imageRef}
+          className='w-3/4 md:object-contain md:h-auto h-[60vh] object-cover   image  '
         />
       </div>
       <div className='flex flex-col px-5 md:px-64 h-[90vh] gap-y-20'>

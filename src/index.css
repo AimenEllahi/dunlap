@@ -112,3 +112,19 @@ button:focus-visible {
   width: 13px;
   transition: all 1ms ease-in-out;
 }
+
+.image {
+  opacity: 0;
+  transition: all 2.5s ease-in-out;
+
+  /* Start with the image scaled to zero width */
+  transform-origin: right;
+  /* Set the transform origin to the right side */
+}
+
+.image.fadeIn {
+
+  opacity: 1;
+
+  /* Scale the image to its original width */
+}
