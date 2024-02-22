@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useProgress } from "@react-three/drei";
 import gsap from "gsap";
+import AudioStore from "../utils/store";
 
 export default function Overlay() {
   const { progress } = useProgress();
-  const [audio, setAudio] = useState(null);
-  const [playing, setPlaying] = useState(false);
-  const [volume, setVolume] = useState(0.5);
 
+  const { setPlaying, setAudio, audio, playing } = AudioStore((state) => state);
   useEffect(() => {
     if (!audio) return;
     playing ? audio.play() : audio.pause();
@@ -71,7 +70,7 @@ export default function Overlay() {
         />
 
         {/* Overlay elements */}
-        {progress === 100 && (
+        {progress >= 100 && (
           <div className='flex background font-serif justify-around items-center flex-col h-full bg-gradient-to-t to-[#6B240C] from-white'>
             <h1 className='text-white flex text-[5rem] p-0 m-0 transform translate-y-[-70%] absolute tracking-wide logo'>
               Sound Experience

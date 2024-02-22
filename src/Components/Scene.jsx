@@ -11,30 +11,6 @@ import { gsap } from "gsap";
 import SplitType from "split-type";
 
 export default function Scene() {
-  const formRef = useRef();
-  const [playing, setPlaying] = useState(false);
-  const [audio, setAudio] = useState(null);
-  const [volume, setVolume] = useState(0.5);
-  const [showDialogue, setShowDialogue] = useState(true);
-
-  useEffect(() => {
-    if (!audio) return;
-    playing ? audio.play() : audio.pause();
-  }, [playing, audio]);
-  useEffect(() => {
-    if (!audio) setAudio(new Audio("/audios/bg-music.mp3"));
-  }, []);
-
-  const handleMusic = (shouldPlay) => {
-    setPlaying(shouldPlay);
-    setPlaying(!playing);
-    if (shouldPlay) {
-      audio.loop = true;
-      audio.volume = 0.3;
-      audio.play();
-    }
-  };
-
   useEffect(() => {
     const ourText = new SplitType(".anim-text", { types: "chars" });
     const chars = ourText.chars;
@@ -62,7 +38,7 @@ export default function Scene() {
 
         <Suspense fallback={<Loader />}>
           <Marble />
-          <Environment preset='studio' />
+          <Environment files='/env/studio_small_03_1k.hdr' />
         </Suspense>
         <Sparkles
           count={100}
@@ -80,48 +56,6 @@ export default function Scene() {
           EXPERIENCE
         </h1>
       </div>
-      <div className=' absolute top-10 left-10 '>
-        <img src='/icons/logo.png' alt='' className='w-14 object-contain' />
-      </div>
-      <div className='h-20 absolute top-10 right-10'>
-        <a
-          href=''
-          className='text-black text-xl uppercase hover:text-black hover:tracking-wide transition-all duration-300 ease-in-out'
-        >
-          About Us
-        </a>
-      </div>
-      {showDialogue && (
-        <DialogueBox
-          onClose={() => setShowDialogue(false)}
-          onPlay={() => handleMusic(true)}
-        />
-      )}
-      {playing ? (
-        <div
-          onClick={handleMusic}
-          className='w-10 h-10 absolute bottom-10 right-10 bg-white p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'
-        >
-          <img
-            src='/icons/audio.gif'
-            alt=''
-            className='w-full'
-            onClick={() => setIsMusicPlaying(false)}
-          />
-        </div>
-      ) : (
-        <div
-          onClick={handleMusic}
-          className='w-10 h-10 absolute bottom-10 right-10 bg-black p-2 rounded-full hover:opacity-40 transition-all duration-300 ease-in-out'
-        >
-          <img
-            src='/icons/audioOff.png'
-            alt=''
-            className='w-full'
-            onClick={() => setIsMusicPlaying(true)}
-          />
-        </div>
-      )}
     </div>
   );
 }
